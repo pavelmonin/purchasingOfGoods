@@ -1,0 +1,382 @@
+
+CREATE TABLE Suppliers( 
+SupplierID int PRIMARY KEY AUTO_INCREMENT NOT NULL, 
+Name VARCHAR(255) CHARACTER SET utf8 NOT NULL unique
+)
+
+CREATE TABLE SupplierGoods(
+    SupplierGoodID int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	Name VARCHAR(255) CHARACTER SET utf8 NOT NULL unique
+)
+
+
+
+CREATE TABLE SupplierGoodPrices(
+	SupplierGoodPriceID int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	SupplierID int NOT NULL ,
+	SupplierGoodID int NOT NULL ,
+	PricePerUnit decimal(18, 2) NOT NULL,
+	StartDate date NOT NULL,
+	EndDate date NOT NULL,
+    
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
+    FOREIGN KEY (SupplierGoodID) REFERENCES SupplierGoods(SupplierGoodID)
+    
+)
+
+
+CREATE TABLE PurchaseOrders(
+	PurchaseOrderID int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	SupplierID int NOT NULL,
+	OrderDate date NOT NULL,
+	Comments VARCHAR(500) CHARACTER SET utf8,
+
+   FOREIGN KEY(SupplierID) REFERENCES Suppliers(SupplierID)
+)
+
+
+
+CREATE TABLE PurchaseOrderLines(
+	PurchaseOrderLineID int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	PurchaseOrderID int NOT NULL,
+	SupplierGoodID int NOT NULL,
+	NumberOfUnits int,
+    
+   FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+   FOREIGN KEY (SupplierGoodID) REFERENCES SupplierGoods(SupplierGoodID)
+)
+
+
+
+
+
+INSERT INTO Suppliers (Name) VALUES ('Поставщик А'), ('Поставщик B'), ('Поставщик C')
+
+INSERT INTO SupplierGoods
+           (Name)
+VALUES
+('Яблоки Golden Delicious'), 
+('Яблоки Royal Gala'),  
+('Груши Conference'), 
+('Груши Williams')
+
+
+
+
+INSERT INTO SupplierGoodPrices (SupplierID ,SupplierGoodID ,PricePerUnit ,StartDate ,EndDate) 
+VALUES ( 1 ,1 ,130 ,'2021-07-01' ,'2021-07-31'), 
+       ( 2 ,1 ,135 ,'2021-07-01' ,'2021-07-31'), 
+       ( 3 ,1 ,140 ,'2021-07-01' ,'2021-07-31'),
+
+       ( 1 ,1 ,150 ,'2021-08-01' ,'2051-07-31'), 
+       ( 2 ,1 ,155 ,'2021-08-01' ,'2051-07-31'), 
+       ( 3 ,1 ,160 ,'2021-08-01' ,'2051-07-31'),
+
+
+
+
+(
+           1
+           ,2 
+           ,145
+           ,'2021-07-01'
+           ,'2021-07-31'
+
+),
+
+(
+           2
+           ,2 
+           ,155
+           ,'2021-07-01'
+           ,'2021-07-31'
+),
+
+(
+           3
+           ,2 
+           ,165
+           ,'2021-07-01'
+           ,'2021-07-31'
+),
+
+
+
+		   
+
+
+(
+           1
+           ,2 
+           ,165
+           ,'2021-08-01'
+           ,'2051-07-31'
+
+),
+
+(
+           2
+           ,2 
+           ,175
+           ,'2021-08-01'
+           ,'2051-07-31'
+),
+
+(
+           3
+           ,2 
+           ,185
+           ,'2021-08-01'
+           ,'2051-07-31'
+),
+
+
+
+(
+           1
+           ,3 
+           ,180
+           ,'2021-07-01'
+           ,'2021-07-31'
+)
+,
+
+
+
+(
+           2
+           ,3 
+           ,185
+           ,'2021-07-01'
+           ,'2021-07-31'
+),
+
+
+
+(
+           3
+           ,3
+           ,195
+           ,'2021-07-01'
+           ,'2021-07-31'
+),
+
+
+
+(
+           1
+           ,3 
+           ,195
+           ,'2021-08-01'
+           ,'2051-07-31'
+),
+
+
+
+(
+           2
+           ,3 
+           ,205
+           ,'2021-08-01'
+           ,'2051-07-31'
+),
+
+
+
+(
+           3
+           ,3
+           ,215
+           ,'2021-08-01'
+           ,'2051-07-31'
+
+)
+
+
+
+
+
+
+		  ,(
+           1
+           ,4 
+           ,225
+			,'2021-07-01'
+            ,'2021-07-31')
+
+    ,(
+           2
+           ,4 
+           ,230
+			,'2021-07-01'
+            ,'2021-07-31')
+
+    ,(
+           3
+           ,4
+           ,235
+			,'2021-07-01'
+            ,'2021-07-31')
+
+
+
+
+
+		  ,(
+           1
+           ,4 
+           ,225
+           ,'2021-08-01'
+           ,'2051-07-31')
+
+    ,(
+           2
+           ,4 
+           ,230
+           ,'2021-08-01'
+           ,'2051-07-31')
+
+    ,(
+           3
+           ,4
+           ,235
+           ,'2021-08-01'
+           ,'2051-07-31')
+
+
+
+INSERT INTO PurchaseOrders (SupplierID ,OrderDate ,Comments) 
+VALUES (1,'2021-07-07','123'), 
+       (2,'2021-07-08','123'), 
+       (3,'2021-07-09','123')
+
+
+INSERT INTO PurchaseOrderLines (PurchaseOrderID ,SupplierGoodID ,NumberOfUnits) 
+VALUES (1,1,5), 
+       (1,2,4),
+       (1,4,3),
+       (2,2,5),
+       (2,3,1),
+       (3,1,4),
+       (3,3,3),
+       (3,4,8)
+
+
+
+
+
+
+INSERT INTO PurchaseOrders (SupplierID ,OrderDate ,Comments) 
+VALUES (1,'2021-07-27','123')
+
+INSERT INTO PurchaseOrderLines (PurchaseOrderID ,SupplierGoodID ,NumberOfUnits) 
+VALUES (4,1,5), 
+       (4,2,1),
+       (4,4,3)
+
+
+
+
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE uspAddPurchaseOrder(IN jsonv JSON)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION SELECT 'SQLException';
+START TRANSACTION;	   	
+		INSERT INTO PurchaseOrders (SupplierID ,OrderDate ,Comments) 
+        VALUES (
+            JSON_EXTRACT(jsonv, CONCAT('$[', 0, '].SupplierID')),
+            NOW(),
+            '123');
+
+                SET @purchaseOrderID = LAST_INSERT_ID();
+        
+
+        SET @json_items=  JSON_LENGTH(jsonv);
+        SET @index=0;
+
+
+        WHILE (@index < @json_items) DO
+                 INSERT INTO PurchaseOrderLines (PurchaseOrderID ,SupplierGoodID ,NumberOfUnits)
+                 VALUES(
+                        @purchaseOrderID,
+                        JSON_EXTRACT(jsonv, CONCAT('$[', @index, '].SupplierGoodID')),
+                        JSON_EXTRACT(jsonv, CONCAT('$[', @index, '].NumberOfUnits')) );
+
+                  SET @index := @index + 1;
+                  SET @res:= @json_items-@index;
+           END WHILE;
+COMMIT;
+SELECT @res as res;
+END; //
+
+DELIMITER ;
+
+
+
+
+
+CREATE VIEW PurchasingDetails AS
+SELECT s.SupplierID
+      ,s.Name as 'Supplier'
+	  ,sg.Name as 'SupplierGood'
+	  ,sgp.PricePerUnit 'PriceForPeriod'
+	  ,sgp.StartDate
+	  ,sgp.EndDate  
+	  ,po.OrderDate
+	  ,pol.NumberOfUnits
+	  ,pol.SupplierGoodID
+	  ,sgp.PricePerUnit * pol.NumberOfUnits as 'PriceForOneKindOfGoodsInOrder'
+
+  FROM Suppliers s
+INNER JOIN  SupplierGoodPrices sgp ON s.SupplierID = sgp.SupplierID
+INNER JOIN SupplierGoods sg ON sg.SupplierGoodID = sgp.SupplierGoodID
+
+INNER JOIN PurchaseOrders po ON ((po.OrderDate BETWEEN sgp.StartDate AND sgp.EndDate) 
+									 AND (po.SupplierID = sgp.SupplierID)
+									 )
+
+INNER JOIN PurchaseOrderLines pol ON (pol.PurchaseOrderID = po.PurchaseOrderID and sg.SupplierGoodID = pol.SupplierGoodID)
+
+ORDER BY s.SupplierID
+
+
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE uspGetSummarizedPurchasesByPeriod (IN startDate date, IN endDate date)
+BEGIN
+  SELECT
+	   SupplierGood,
+	   Supplier,	
+       SUM(PriceForOneKindOfGoodsInOrder) as 'PriceTotal',
+	   SUM(NumberOfUnits) as 'NumberOfUnitsTotal' 
+	         
+  FROM purchasingdetails
+  WHERE OrderDate BETWEEN startDate AND endDate 
+  GROUP BY Supplier,SupplierGood;
+  
+END; //
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
